@@ -1,0 +1,15 @@
+create table employee(
+id int primary key,
+name varchar(50),
+age int,
+salary int,
+gender varchar(10)
+);
+
+alter table employee add column level int;
+
+alter table employee add column experience int;
+
+select * from employee;
+
+delete from employee where id=1;
