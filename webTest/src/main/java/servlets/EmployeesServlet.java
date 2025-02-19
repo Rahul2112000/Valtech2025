@@ -64,7 +64,7 @@ public class EmployeesServlet extends HttpServlet {
 			Employee e = dao.get(id);
 			req.setAttribute("emp", e);
 			req.setAttribute("mode", "Update");
-			req.getRequestDispatcher("editEmployees.jsp").forward(req, resp);
+			req.getRequestDispatcher("editEmployee.jsp").forward(req, resp);
 			return;
 		}
 		if("Delete".equals(operation)) {

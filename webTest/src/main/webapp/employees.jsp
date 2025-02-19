@@ -87,6 +87,7 @@
 </tr>
 <% 
 	List<Employee> emps=(List<Employee>) request.getAttribute("emps");
+if(emps!=null){
 	for(Employee e: emps){
 	%>
 		<tr>
@@ -115,7 +116,11 @@
 		</td>
 		</tr>
 
-<% } %>
+<% }
+	}else {%>
+	<tr><td>  Employee not found!!
+	</td></tr>
+	<%} %>
 </table>
 </body>
 </html>

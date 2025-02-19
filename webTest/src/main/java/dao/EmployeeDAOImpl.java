@@ -72,7 +72,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 	@Override
 	public void update(Employee e) {
-		try(Connection conn = getConnection()) {
+		try(Connection conn = getConnection()) {  //ID,NAME,AGE,GENDER,SALARY,EXPERIENCE,LEVEL
 			PreparedStatement ps = conn.prepareStatement("UPDATE EMPLOYEE SET NAME = ?,AGE = ?,GENDER = ?,SALARY = ?,EXPERIENCE = ?,LEVEL = ? WHERE ID = ?");
 			setValuesToPreparedStatement(e, ps);
 			int rowsAffected = ps.executeUpdate();
