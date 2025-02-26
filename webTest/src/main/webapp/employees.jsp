@@ -86,7 +86,7 @@
 </div>
  
 
-<table>
+<!-- <table>
 <tr>
 
 	<th>Id</th>
@@ -96,7 +96,7 @@
 	<th>Salary</th>
 	<th>Experience</th>
 	<th>Level</th>
-</tr>
+</tr> --><%-- 
 <% 
 	List<Employee> emps=(List<Employee>) request.getAttribute("emps");
 if(emps!=null){
@@ -132,7 +132,7 @@ if(emps!=null){
 	}else {%>
 	<tr><td>  Employee not found!!
 	</td></tr>
-	<%} %>
-</table>
+	<%} %> --%>
+<!-- </table> -->
 </body>
 </html>

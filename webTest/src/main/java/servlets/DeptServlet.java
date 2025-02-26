@@ -55,7 +55,7 @@ public class DeptServlet extends HttpServlet {
 		    }
 		}
 		session.setAttribute("current", current);
-		//Exprressions in JSP can work with objects in session also...
+		//Expressions in JSP can work with objects in session also...
 		req.setAttribute("dept", current);
 		
 		
