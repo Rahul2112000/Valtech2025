@@ -38,7 +38,7 @@ Current Dept=${current }
 	</td>
 </tr>
 
-hr></hr>
+<hr></hr>
  
 <h2>Employees in Department</h2>
 <table>

@@ -28,7 +28,7 @@ public class LoadConfig implements ServletContextListener {
 
 			if(input == null) {
 
-				System.out.println("soory not input found");
+				System.out.println("No input found");
 
 				return;
 
@@ -66,8 +66,8 @@ public class LoadConfig implements ServletContextListener {
 		}
 
 		EmployeeDAOImpl dao = new EmployeeDAOImpl(context);
-
 		context.setAttribute("emp", dao);
+
 
 	}
 
