@@ -73,6 +73,18 @@
 </tr>
 </table>
 
+<div class="dropdown">
+ 
+<jsp:include page="selectMenu.jsp" >
+<jsp:param name="mode" value="employees"/>
+</jsp:include>
+ 
+<button value="RESET" type="submit" name="reset">Reset</button>
+</form>
+</div>
+ 
+</div>
+ 
 
 <table>
 <tr>

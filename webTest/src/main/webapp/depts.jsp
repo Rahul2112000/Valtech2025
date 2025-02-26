@@ -7,8 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-Counters=${counters }
-Current Dept=${current }
+Counters=${counters}
+Current Dept=${current}
 <form action="depts" method="post">
 <table>
 <tr>
@@ -52,18 +52,28 @@ Current Dept=${current }
 	<th><a href="depts?operation=sort&column=LEVEL">Level</a></th>
 	
 	</tr>
-	<c:forEach items="${emps}" var="e">            <%-- second type of writing style , first is below it --%>
+	<c:forEach items="${emps}" var="e">            
 		<tr>                                   
-			<td><c:out value ="${e.id}"></c:out></td>        <%-- c out is used for writing in a good way . can be used and not --%>
+			<td><c:out value ="${e.id}"></c:out></td>        
 			<td>${e.name}</td>
 			<td>${e.age}</td>
 			<td>${e.gender}</td>
 			<td>${e.salary}</td>
 			<td>${e.experience}</td>
 			<td>${e.level}</td>
+			<td><a href="employees?operation=update&id=${e.id}">Update</a><a href="employees?operation=delete&id=${e.id}">Delete</a></td>
+
+ 
 		</tr>
 	</c:forEach>
-	  
+	  <tr>
+<tr>
+<td colspan="7"><a href="employees?operation=newEmp&current=${current}">New Employee</a></td>
+</tr>
+ 
+<th> <a href="employees?operation=SortByNameDepts&current=${current.id}">Name</a></th>
+
+ 
 	
 </table>
  
@@ -71,7 +81,11 @@ Current Dept=${current }
  
 </table>
 </form>
-
+<jsp:include page="selectMenu.jsp" >	
+<jsp:param name="typeofmeth" value="depts"/>
+<jsp:param name="mode" value="depts"/>
+</jsp:include>
+ 
 
 
 </body>
