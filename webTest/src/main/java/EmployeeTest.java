@@ -18,31 +18,7 @@ class EmployeeTest {
 		Employee.builder().id(1).name("Rahul").age(21).level(3).salary(10000).experience(1).gender(Gender.MALE).build();
 		Employee.builder().id(1).name("Badal").age(22).level(1).salary(105000).experience(8).gender(Gender.MALE).build();
 		Employee.builder().id(1).name("Mayank").age(19).level(2).salary(36000).experience(2).gender(Gender.FEMALE).build();
-		System.out.println(" LIST OF ALL EMPLOYEES ");
-		
-		Collections.sort(Employee.allEmp);
-		for (Employee emps : Employee.allEmp) {
-			System.out.println(emps);
-		}
-		
-		System.out.println(" OUTPUT");
-		double emp1= Employee.getEmployeeByLevel(3);
-		System.out.println(emp1);
-
-				System.out.println("OUTPUT");
-		double emp2= Employee.getEmployeeByGender(Gender.MALE);
-		System.out.println("Salary Sum By Gender = " + emp2);
-		System.out.println("OUTPUT");
-		double emp3= Employee.getEmployeeByName("Mika");
-		System.out.println(emp3);
-		System.out.println("OUTPUT");
-		double emp4= Employee.getEmployeeByGenderLevel(2,Gender.FEMALE);
-		System.out.println(emp4);
-		System.out.println("OUTPUT");
-		Map<Gender,List<Employee>> emp5= Employee.getEmployeeByGender();
-		System.out.println("All Employee List By Gender  = " + emp5);
 	}
-
 	@Test
 	void testHashCode() {
 		Employee employee = new Employee(12, "Badal", 22, 2, 30000, 5, Gender.MALE);
