@@ -149,6 +149,8 @@ public class Employee implements Comparable<Employee>{
 				+ experience + ", level=" + level + "]";
 	}
 	
+	
+	//builderclass
 	public static EmployeeBuilder builder() {
 		return new EmployeeBuilder(new Employee());
 		}
@@ -202,6 +204,7 @@ public class Employee implements Comparable<Employee>{
 		
 		
 	}
+	//comparable function
 	@Override
 	public int compareTo(Employee o) {
 		if(this.level!=o.level)
