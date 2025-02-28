@@ -1,72 +1,120 @@
 package servlets;
- 
+
 import java.sql.*;
+
+import java.util.ArrayList;
+
 import java.util.HashSet;
+
+import java.util.List;
+
 import java.util.Set;
+ 
+import dao.Employee;
+
+import dao.Employee.Gender;
+
 import jakarta.servlet.ServletContext;
- 
+
 public class DeptDAOImpl implements DeptDAO {
-    
+
     private ServletContext context;
- 
+
     public DeptDAOImpl(ServletContext context) {
+
         this.context = context;
+
     }
- 
+
     private Connection getConnection() throws SQLException {
+
         return DriverManager.getConnection(
+
             (String) context.getAttribute("jdbc_url"),
+
             (String) context.getAttribute("jdbc_user"),
+
             (String) context.getAttribute("jdbc_password")
+
         );
+
     }
- 
+
     @Override
+
     public Dept first() {
+
         try (Connection conn = getConnection()) {
+
             System.out.println("🔍 Executing SQL: SELECT * FROM dept ORDER BY deptid ASC LIMIT 1");
- 
+
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM dept ORDER BY deptid ASC LIMIT 1");
+
             ResultSet rs = ps.executeQuery();
- 
+
             if (rs.next()) {
+
                 System.out.println("First Department Found: " + rs.getString("deptname"));
+
                 return new Dept(
+
                     rs.getInt("deptid"),
+
                     rs.getString("deptname"),
+
                     rs.getString("deptlocation")
+
                 );
+
             }
+
         } catch (SQLException e) {
+
             e.printStackTrace();
+
         }
- 
+
         throw new RuntimeException("No departments found in database!");
+
     }
- 
+
     @Override
+
     public Dept last() {
+
         try (Connection conn = getConnection()) {
+
             System.out.println("Executing SQL: SELECT * FROM dept ORDER BY deptid DESC LIMIT 1");
- 
+
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM dept ORDER BY deptid DESC LIMIT 1");
+
             ResultSet rs = ps.executeQuery();
- 
+
             if (rs.next()) {
+
                 System.out.println("Last Department Found: " + rs.getString("deptname"));
+
                 return new Dept(
+
                     rs.getInt("deptid"),
+
                     rs.getString("deptname"),
+
                     rs.getString("deptlocation")
+
                 );
+
             }
+
         } catch (SQLException e) {
+
             e.printStackTrace();
+
         }
- 
+
         throw new RuntimeException("No departments found in database!");
+
     }
- 
     @Override
     public Dept next(int id) {
         try (Connection conn = getConnection()) {
@@ -208,7 +256,7 @@ public class DeptDAOImpl implements DeptDAO {
     public Set<Dept> getAll() {
         Set<Dept> depts = new HashSet<>();
         try (Connection conn = getConnection()) {
-            System.out.println("Fetching All Departments");
+            System.out.println(" Fetching All Departments");
  
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM dept");
             ResultSet rs = ps.executeQuery();
@@ -228,6 +276,47 @@ public class DeptDAOImpl implements DeptDAO {
  
         return depts;
     }
+    
+    private Employee populateEmployee(ResultSet rs) throws SQLException {
+    	return Employee.builder().id(rs.getInt(1)).name(rs.getString(2)).age(rs.getInt(3)).gender(Gender.valueOf(rs.getString(4)))
+				.salary(rs.getFloat(5)).experience(rs.getInt(6)).level(rs.getInt(7)).build();
+		
+	}
+    @Override
+    public List<Employee> getEmployeesByDeptId(int deptId) {
+        List<Employee> employees = new ArrayList<>();
+        try (Connection conn = getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(
+                "SELECT e.id, e.name, e.age, e.gender, e.salary, e.experience, e.level, d.deptname, d.deptlocation " +
+                "FROM employee e " +
+                "JOIN dept d ON e.deptid = d.deptid " +
+                "WHERE e.deptid = ?"
+            );
+            ps.setInt(1, deptId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Employee emp = new Employee(
+                    rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getInt("age"),
+                    Employee.Gender.valueOf(rs.getString("gender")),
+                    rs.getFloat("salary"),
+                    rs.getInt("experience"),
+                    rs.getInt("level"),
+                    deptId
+                );
+                emp.setDeptName(rs.getString("deptname"));
+                emp.setDeptLocation(rs.getString("deptlocation"));
+                employees.add(emp);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(" Error fetching employees for department ID: " + deptId, e);
+        }
+        return employees;
+    }
+ 
+    
+    
 }
  
  

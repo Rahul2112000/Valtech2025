@@ -143,12 +143,20 @@ public class Employee implements Comparable<Employee>{
 				&& Objects.equals(name, other.name)
 				&& Float.floatToIntBits(salary) == Float.floatToIntBits(other.salary);
 	}
+//	@Override
+//	public String toString() {
+//		return "Employee [id=" + id + ", name=" + name + ", age=" + age + ", salary=" + salary + ", experience="
+//				+ experience + ", level=" + level + "]";
+//	}
+	
+	
+	
 	@Override
 	public String toString() {
-		return "Employee [id=" + id + ", name=" + name + ", age=" + age + ", salary=" + salary + ", experience="
-				+ experience + ", level=" + level + "]";
+	    return "id: " + id + " ,name:" + name + " ,age: " + age + " ,experience: " + experience + 
+	           " ,salary: " + salary + " ,level: " + level + ", Gender: " + gender;
 	}
-	
+
 	public static EmployeeBuilder builder() {
 		return new EmployeeBuilder(new Employee());
 		}

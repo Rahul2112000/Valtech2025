@@ -68,24 +68,39 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 	public void save(Employee e) {
 
-		try(Connection conn = getConnection()) {
+		    try (Connection conn = getConnection()) {
 
-			PreparedStatement ps = conn.prepareStatement("INSERT INTO EMPLOYEE (NAME,AGE,GENDER,SALARY,EXPERIENCE,LEVEL,ID) VALUES (?,?,?,?,?,?,?)");
+		        PreparedStatement ps = conn.prepareStatement(
 
-			setValuesToPreparedStatement(e, ps);
+		            "INSERT INTO employee (id, name, age, gender, salary, experience, level, deptid) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
 
-			int rowsAffected = ps.executeUpdate();
+		        );
 
-			System.out.println("Rows Updated = "+ rowsAffected);
+		        ps.setInt(1, (int)e.getId());
 
-		} catch(Exception ex) {
+		        ps.setString(2, e.getName());
 
-			throw new RuntimeException(ex);
+		        ps.setInt(3, e.getAge());
+
+		        ps.setString(4, e.getGender().name());
+
+		        ps.setFloat(5, e.getSalary());
+
+		        ps.setInt(6, e.getExperience());
+
+		        ps.setInt(7, e.getLevel());
+
+ 
+		        int rowsAffected = ps.executeUpdate();
+
+		    } catch (SQLException ex) {
+
+		        throw new RuntimeException("Error saving employee: " + ex.getMessage(), ex);
+
+		    }
 
 		}
- 
-	}
- 
+
 	private void setValuesToPreparedStatement(Employee e, PreparedStatement ps) throws SQLException {
 
 		ps.setString(1, e.getName());
@@ -149,7 +164,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	}
  
 	@Override
-    public Employee get(int id) {
+
+	public Employee get(int id) {
 
 		try (Connection conn = getConnection()) {
 
@@ -189,32 +205,38 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 				.salary(rs.getFloat(5)).experience(rs.getInt(6)).level(rs.getInt(7)).build();
 
 	}
+
+ 
  
 	@Override
 
 	public List<Employee> getAll() {
 
-		List<Employee> emps = new ArrayList<Employee>();
+		 List<Employee> emps = new ArrayList<>();
 
-		try (Connection conn = getConnection()){
+		    try (Connection conn = getConnection()) {
 
-			PreparedStatement ps = conn.prepareStatement("SELECT ID,NAME,AGE,GENDER,SALARY,EXPERIENCE,LEVEL FROM EMPLOYEE");
+		        System.out.println("Fetching All Employees");
+ 
+		        PreparedStatement ps = conn.prepareStatement("SELECT * FROM employee");
 
-			ResultSet rs = ps.executeQuery();
+		        ResultSet rs = ps.executeQuery();
+ 
+		        while (rs.next()) {
 
-			while(rs.next()) {
+		            emps.add(populateEmployee(rs));  
 
-				emps.add(populateEmployee(rs));
+		        }
+ 
+		        System.out.println("Total Employees Found: " + emps.size());
 
-			}
+		    } catch (SQLException e) {
 
-			}catch (Exception ex) {
+		        e.printStackTrace();
 
-				throw new RuntimeException(ex);		
-
-			}
-
-		return emps;
+		    }
+ 
+		    return emps;
 
 	}
 
@@ -431,6 +453,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 	}
 
+
 	@Override
 
 	public List<Employee> sortEmployees(String column,String order) {
@@ -455,16 +478,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 		}
 
-		return emps;
+		return emps;					
+ 
 
 	}
- 
 }
-
- 
-
-
-
 
 //package dao;
 
