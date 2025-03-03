@@ -7,8 +7,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/training
     username: postgres
     password: postgres
-  
-  jpa:
+ 
+  jpa :  
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
  

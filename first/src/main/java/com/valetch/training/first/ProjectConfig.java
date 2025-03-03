@@ -8,12 +8,12 @@ public class ProjectConfig {
 	
 	
 //	@Bean
-	public SimpleInterest simpleInterest(Arithmetic arithmetic) {
-		
-		
-		return new SimpleInterestImpl(arithmetic);
-		
-	}
+//	public SimpleInterest simpleInterest(Arithmetic arithmetic) {
+//		
+//		
+//		return new SimpleInterestImpl(arithmetic);
+//		
+//	}
 //	@Bean
 	public Arithmetic arithmetic() {
 		return new ArithmeticImpl();
