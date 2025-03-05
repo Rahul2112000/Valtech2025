@@ -21,7 +21,7 @@ public class Order {
 	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "orderseq")
 	@SequenceGenerator(name = "orderseq",sequenceName = "order_seq",allocationSize = 1)
 	private int id;
-	private String stauts; 
+	private String status; 
 	
 	@ManyToOne(targetEntity = Customer.class)
 	@JoinColumn(name="customer_id",referencedColumnName = "id")
@@ -38,8 +38,8 @@ public class Order {
 	
 	public Order() {}
 
-	public Order(String stauts) {
-		this.stauts = stauts;
+	public Order(String status) {
+		this.status = status;
 	}
 
 	public int getId() {
@@ -50,12 +50,12 @@ public class Order {
 		this.id = id;
 	}
 
-	public String getStauts() {
-		return stauts;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setStauts(String stauts) {
-		this.stauts = stauts;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public Customer getCustomer() {

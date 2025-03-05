@@ -7,16 +7,16 @@ import java.util.Scanner;
 
 public class DateTimeDifference {
 
-    // Method to compute the time difference
+   
     public static String computeTimeDifference(LocalDateTime startTime, LocalDateTime endTime) {
         if (endTime.isBefore(startTime)) {
             return "End time must be after start time.";
         }
 
-        // Calculate the duration between the two times
+        
         Duration duration = Duration.between(startTime, endTime);
 
-        // Extract days, hours, and minutes
+       
         long days = duration.toDays();
         long hours = duration.toHours() % 24;
         long minutes = duration.toMinutes() % 60;
@@ -27,21 +27,21 @@ public class DateTimeDifference {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // DateTime format
+      
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         try {
-            // Input start time
+           
             System.out.println("Enter start time (yyyy-MM-dd HH:mm):");
             String startTimeInput = scanner.nextLine();
             LocalDateTime startTime = LocalDateTime.parse(startTimeInput, formatter);
 
-            // Input end time
+            
             System.out.println("Enter end time (yyyy-MM-dd HH:mm):");
             String endTimeInput = scanner.nextLine();
             LocalDateTime endTime = LocalDateTime.parse(endTimeInput, formatter);
 
-            // Compute and display the difference
+           
             String result = computeTimeDifference(startTime, endTime);
             System.out.println("Time Difference: " + result);
         } catch (Exception e) {

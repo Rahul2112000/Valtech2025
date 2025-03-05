@@ -17,7 +17,7 @@ public class MobileRank {
     private static int calcRank(String num) {
         int rank = 0;
 
-        // Check for ascending order
+        
         boolean isAscending = true;
         for (int i = 1; i < num.length(); i++) {
             if (num.charAt(i) < num.charAt(i - 1)) {
@@ -25,9 +25,9 @@ public class MobileRank {
                 break;
             }
         }
-        if (isAscending) rank += 30; // Highest priority
+        if (isAscending) rank += 30; 
 
-        // Check for descending order
+        
         boolean isDescending = true;
         for (int i = 1; i < num.length(); i++) {
             if (num.charAt(i) > num.charAt(i - 1)) {
@@ -35,9 +35,9 @@ public class MobileRank {
                 break;
             }
         }
-        if (isDescending) rank += 20; // Second highest priority
+        if (isDescending) rank += 20; 
 
-        // Check for repeated digits
+       
         Set<Character> digits = new HashSet<>();
         int repeatedCount = 0;
         for (char c : num.toCharArray()) {
@@ -45,7 +45,7 @@ public class MobileRank {
                 repeatedCount++;
             }
         }
-        if (repeatedCount > 0) rank += (repeatedCount * 5); // Weighted by repetitions
+        if (repeatedCount > 0) rank += (repeatedCount * 5); 
 
         return rank;
     }
@@ -54,14 +54,14 @@ public class MobileRank {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the number of mobiles:");
         int n = sc.nextInt();
-        sc.nextLine(); // Consume the newline character
+        sc.nextLine(); 
 
         List<String> mobiles = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             System.out.println("Enter the mobile " + (i + 1) + ":");
             String number = sc.nextLine();
 
-            // Validate mobile number length (must be 10 digits)
+            
             if (number.length() != 10 || !number.matches("\\d{10}")) {
                 System.out.println("Invalid mobile number! It must be exactly 10 digits. Skipping this number.");
                 continue;
@@ -76,16 +76,16 @@ public class MobileRank {
             rankNumber.add(new MobileRanking(num, rank));
         }
 
-        // Sort by rank (descending) and then by the number itself (ascending)
+       
         rankNumber.sort((a, b) -> {
             if (a.rank != b.rank) {
-                return Integer.compare(b.rank, a.rank); // Higher rank first
+                return Integer.compare(b.rank, a.rank); 
             } else {
-                return a.number.compareTo(b.number); // If same rank, sort by number
+                return a.number.compareTo(b.number);
             }
         });
 
-        // Display the ranked mobile numbers
+        
         System.out.println("\nMobiles based on rank:");
         int rank = 1;
         for (MobileRanking mr : rankNumber) {

@@ -47,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
 		Order order=getOrder(id);
 		
 		if(order !=null) {
-			order.setStauts(status);
+			order.setStatus(status);
 			updateOrder(order);
 		}
 	}

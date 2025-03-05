@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class PasswordStrengthChecker {
     
-    // Method to check the strength of the password
+    
     public static String checkPasswordStrength(String password) {
         boolean hasLowercase = false;
         boolean hasUppercase = false;
