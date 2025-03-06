@@ -1,7 +1,7 @@
 package ass.services;
-
+ 
 import java.util.List;
-
+ 
 import org.hibernate.SessionFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 
 import org.springframework.transaction.annotation.Transactional;
-
+ 
 import ass.classes.Customer;
 
 import ass.classes.Item;
@@ -23,13 +23,14 @@ import ass.classes.Item;
 import ass.dao.CustomerDAO;
 
 import ass.dao.InventoryDAO;
-
+ 
+ 
 @Transactional(propagation = Propagation.REQUIRED)
 
 public class InventoryServiceImpl implements InventoryService {
-
+ 
 	private InventoryDAO inventoryDAO;
-
+ 
 	public void setInventoryDAO(InventoryDAO inventoryDAO) {
 
 		this.inventoryDAO = inventoryDAO;
@@ -43,7 +44,7 @@ public class InventoryServiceImpl implements InventoryService {
 		inventoryDAO.addInventory(item);
 
 	}
-
+ 
 	@Override
 
 	public Item getInventory(int id) {
@@ -51,7 +52,7 @@ public class InventoryServiceImpl implements InventoryService {
 		return inventoryDAO.getInventory(id);
 
 	}
-
+ 
 	@Override
 
 	public List<Item> getAll() {
@@ -59,7 +60,7 @@ public class InventoryServiceImpl implements InventoryService {
 		return inventoryDAO.getAll();
 
 	}
-
+ 
 	@Override
 
 	public void updateInventory(Item item) {
@@ -67,7 +68,7 @@ public class InventoryServiceImpl implements InventoryService {
 		inventoryDAO.updateInventory(item);
 
 	}
-
+ 
 	@Override
 
 	public void deleteInventory(int id) {
@@ -75,57 +76,68 @@ public class InventoryServiceImpl implements InventoryService {
 		inventoryDAO.deleteInventory(id);
 
 	}
-
+ 
 	@Override
 
 	public void reorderItem(Item item) {
 
-		System.out.println("️ Stock below reorder level! Reordering item: " + item.getName());
+        System.out.println("️ Stock below reorder level! Reordering item: " + item.getName());
 
-		item.setQty(item.getMaxQty());
+        item.setQty(item.getMaxQty()); 
 
-		inventoryDAO.updateItem(item);
+        inventoryDAO.updateItem(item);
 
-	}
-
+    }
+ 
+ 
 	@Override
 
-	@Transactional
+    @Transactional
 
-	public void removeItem(int itemId, int quantity) {
+    public void removeItem(int itemId, int quantity) {  
 
-		Item item = inventoryDAO.getItem(itemId);
+        Item item = inventoryDAO.getItem(itemId);
 
-		if (item != null) {
+        if (item != null) {
 
-			int updatedQty = item.getQty() - quantity;
+            int updatedQty = item.getQty() - quantity;
 
-			if (updatedQty < 0) {
+            if (updatedQty < 0) {
 
-				System.out.println("Error: Not enough quantity available to remove!");
+                System.out.println("Error: Not enough quantity available to remove!");
 
-			} else {
+            } else {
 
-				item.setQty(updatedQty);
+                item.setQty(updatedQty);
 
-				inventoryDAO.updateItem(item);
+                inventoryDAO.updateItem(item);
 
-				System.out.println(quantity + " items removed. Remaining stock: " + updatedQty);
+                System.out.println(quantity + " items removed. Remaining stock: " + updatedQty);
+ 
+                
 
-				if (updatedQty < item.getReorderQty()) {
+                if (updatedQty < item.getReorderQty()) {
 
-					reorderItem(item);
+                    reorderItem(item);
 
-				}
+                }
 
-			}
+            }
 
-		} else {
+        } else {
 
-			System.out.println("Item not found with ID: " + itemId);
+            System.out.println("Item not found with ID: " + itemId);
 
-		}
+        }
 
-	}
-
+    }
+ 
+	
+ 
+	
+ 
+	
+ 
 }
+
+ 

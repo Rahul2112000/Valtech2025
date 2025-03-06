@@ -234,6 +234,44 @@ public class Employee implements Comparable<Employee>{
 		else
 			return (int)(salary-o.salary);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	 public static void main(String[] args) {
 		Employee obj=new Employee(7,"Rahul",22,30000,2,5,Gender.MALE);
 		System.out.println(obj.toString());

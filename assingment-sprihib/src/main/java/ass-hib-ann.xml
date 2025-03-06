@@ -20,7 +20,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/tx spring-tx-3.2.xsd h
 			<p:list>
 				<p:value>ass.classes.Customer</p:value>
 				<p:value>ass.classes.Item</p:value>
-				<p:value>ass.classes.Order</p:value>
+				<p:value>ass.classes.OrderEx</p:value>
 				<p:value>ass.classes.LiveItem</p:value>
 			</p:list>
 		</p:property>

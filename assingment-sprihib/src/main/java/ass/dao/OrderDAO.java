@@ -1,16 +1,20 @@
 package ass.dao;
-
-
-
+ 
 import java.util.List;
-
-import ass.classes.Order;
-
+ 
+import ass.classes.OrderEx;
+ 
 public interface OrderDAO {
+ 
+	void addOrder(OrderEx order);
 
-	void addOrder(Order order);
-	Order getOrder(int id);
-	List<Order> getAll();
-	void updateOrder(Order order);
+	OrderEx getOrder(int id);
+
+	List<OrderEx> getAll();
+
+	void updateOrder(OrderEx order);
+
 	void deleteOrder(int id);
+
 }
+ 

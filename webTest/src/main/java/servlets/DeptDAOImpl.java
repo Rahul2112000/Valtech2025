@@ -46,7 +46,7 @@ public class DeptDAOImpl implements DeptDAO {
 
         try (Connection conn = getConnection()) {
 
-            System.out.println("🔍 Executing SQL: SELECT * FROM dept ORDER BY deptid ASC LIMIT 1");
+            System.out.println(" Executing SQL: SELECT * FROM dept ORDER BY deptid ASC LIMIT 1");
 
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM dept ORDER BY deptid ASC LIMIT 1");
 
@@ -133,7 +133,7 @@ public class DeptDAOImpl implements DeptDAO {
                 );
             } else {
                 System.out.println("No next department found! Returning the last department.");
-                return last();  // If no next department, return the last department
+                return last();  //  no next department, return the last department
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -160,7 +160,7 @@ public class DeptDAOImpl implements DeptDAO {
                 );
             } else {
                 System.out.println(" No previous department found! Returning the first department.");
-                return first();  // If no previous department, return the first one
+                return first();  //  no previous department, return the first one
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -320,6 +320,27 @@ public class DeptDAOImpl implements DeptDAO {
 }
  
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //package servlets;

@@ -67,7 +67,7 @@
  
 <hr></hr>
  
-<table>
+<%-- <table>
 	<tr>
 	<th>Id</th>
 	<th>Name</th>
@@ -107,7 +107,7 @@
 <% } %>
 		
 </table>
- 
+  --%>
  
 </body>
 </html>
