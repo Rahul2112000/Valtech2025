@@ -1,7 +1,7 @@
 package ass.dao;
- 
+
 import java.util.List;
- 
+
 import org.hibernate.SessionFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,14 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import org.springframework.stereotype.Repository;
- 
+
 import ass.classes.Customer;
- 
+
 @Repository
 
 public class CustomerDAOImpl implements CustomerDAO {
- 
-	
 
 	private SessionFactory sessionFactory;
 
@@ -33,7 +31,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 		new HibernateTemplate(sessionFactory).save(customer);
 
 	}
- 
+
 	@Override
 
 	public Customer getCustomer(int id) {
@@ -41,7 +39,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 		return new HibernateTemplate(sessionFactory).load(Customer.class, id);
 
 	}
- 
+
 	@Override
 
 	public List<Customer> getAll() {
@@ -49,7 +47,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 		return new HibernateTemplate(sessionFactory).find("from Customer customer");
 
 	}
- 
+
 	@Override
 
 	public void updateCustomer(Customer customer) {
@@ -57,7 +55,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 		new HibernateTemplate(sessionFactory).update(customer);
 
 	}
- 
+
 	@Override
 
 	public void deleteCustomer(int id) {
@@ -65,7 +63,5 @@ public class CustomerDAOImpl implements CustomerDAO {
 		new HibernateTemplate(sessionFactory).delete(getCustomer(id));
 
 	}
- 
-}
 
- 
+}

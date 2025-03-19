@@ -1,10 +1,9 @@
 package ass.dao;
- 
+
 import java.util.List;
- 
+
 import ass.classes.LiveItem;
- 
- 
+
 public interface LiveItemDAO {
 
 	void addLiveItem(LiveItem liveitem);
@@ -18,4 +17,3 @@ public interface LiveItemDAO {
 	void deleteLiveItem(int id);
 
 }
- 

@@ -89,6 +89,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		        ps.setInt(6, e.getExperience());
 
 		        ps.setInt(7, e.getLevel());
+		        ps.setInt(8, e.getDeptId());
 
  
 		        int rowsAffected = ps.executeUpdate();

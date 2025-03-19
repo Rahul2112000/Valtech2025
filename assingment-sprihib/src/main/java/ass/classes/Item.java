@@ -1,7 +1,7 @@
 package ass.classes;
- 
+
 import java.util.List;
- 
+
 import javax.persistence.Entity;
 
 import javax.persistence.GeneratedValue;
@@ -15,14 +15,15 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 import javax.persistence.SequenceGenerator;
- 
+
 @Entity
 
 public class Item {
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY,generator = "itemseq")
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "itemseq")
 
-	@SequenceGenerator(name = "itemseq",sequenceName = "item_seq",allocationSize = 1)
+	@SequenceGenerator(name = "itemseq", sequenceName = "item_seq", allocationSize = 1)
 
 	private int id;
 
@@ -42,10 +43,9 @@ public class Item {
 
 	private List<OrderEx> orders;
 
-	@OneToOne(targetEntity = LiveItem.class,mappedBy = "item")
+	@OneToOne(targetEntity = LiveItem.class, mappedBy = "item")
 
 	private LiveItem liveItem;
-
 
 	public Item() {
 
@@ -54,10 +54,8 @@ public class Item {
 		// TODO Auto-generated constructor stub
 
 	}
- 
-	
 
-	public Item(String name, String description, int qty, int reorderQty, int maxQty,int minQuantity) {
+	public Item(String name, String description, int qty, int reorderQty, int maxQty, int minQuantity) {
 
 		super();
 
@@ -73,125 +71,116 @@ public class Item {
 
 		this.minQuantity = minQuantity;
 
-		this.liveItem=new LiveItem(this,qty);
+		this.liveItem = new LiveItem(this, qty);
 
 	}
- 
- 
+
 	public int getId() {
 
 		return id;
 
 	}
- 
+
 	public void setId(int id) {
 
 		this.id = id;
 
 	}
- 
+
 	public String getName() {
 
 		return name;
 
 	}
- 
+
 	public void setName(String name) {
 
 		this.name = name;
 
 	}
- 
+
 	public String getDescription() {
 
 		return description;
 
 	}
- 
+
 	public void setDescription(String description) {
 
 		this.description = description;
 
 	}
- 
+
 	public int getQty() {
 
 		return qty;
 
 	}
- 
+
 	public void setQty(int qty) {
 
 		this.qty = qty;
 
 	}
- 
+
 	public int getReorderQty() {
 
 		return reorderQty;
 
 	}
- 
+
 	public void setReorderQty(int reorderQty) {
 
 		this.reorderQty = reorderQty;
 
 	}
- 
+
 	public int getMaxQty() {
 
 		return maxQty;
 
 	}
- 
+
 	public void setMaxQty(int maxQty) {
 
 		this.maxQty = maxQty;
 
 	}
 
-	 public int getMinQuantity() {
+	public int getMinQuantity() {
 
-	        return minQuantity;
+		return minQuantity;
 
-	    }
+	}
 
-	 public void setMinQuantity(int minQuantity) {
+	public void setMinQuantity(int minQuantity) {
 
-	        this.minQuantity = minQuantity;
+		this.minQuantity = minQuantity;
 
-	    }
- 
- 
+	}
+
 	public List<OrderEx> getOrders() {
 
 		return orders;
 
 	}
- 
+
 	public void setOrders(List<OrderEx> orders) {
 
 		this.orders = orders;
 
 	}
- 
+
 	public LiveItem getLiveItem() {
 
 		return liveItem;
 
 	}
- 
+
 	public void setLiveItem(LiveItem liveItem) {
 
 		this.liveItem = liveItem;
 
 	}
- 
- 
-	
- 
-	
 
 }
-
- 

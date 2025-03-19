@@ -1,7 +1,7 @@
 package ass.classes;
- 
+
 import java.util.List;
- 
+
 import javax.persistence.Entity;
 
 import javax.persistence.GeneratedValue;
@@ -15,17 +15,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 import javax.persistence.Table;
- 
- 
+
 @Entity
 
-@Table(name="customer1")
+@Table(name = "customer1")
 
 public class Customer {
- 
-	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "custseq")
 
-	@SequenceGenerator(name = "custseq",sequenceName = "cust_seq",allocationSize = 1)
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "custseq")
+
+	@SequenceGenerator(name = "custseq", sequenceName = "cust_seq", allocationSize = 1)
 
 	private int id;
 
@@ -37,13 +37,13 @@ public class Customer {
 
 	private String permanantAddress;
 
-	@OneToMany(targetEntity = OrderEx.class,mappedBy = "customer")
+	@OneToMany(targetEntity = OrderEx.class, mappedBy = "customer")
 
 	private List<OrderEx> orders;
 
-	public Customer() {}
+	public Customer() {
+	}
 
- 
 	public Customer(String name, int age, String addresss, String permanantAddress) {
 
 		super();
@@ -57,83 +57,77 @@ public class Customer {
 		this.permanantAddress = permanantAddress;
 
 	}
- 
- 
+
 	public int getId() {
 
 		return id;
 
 	}
- 
+
 	public void setId(int id) {
 
 		this.id = id;
 
 	}
- 
+
 	public String getName() {
 
 		return name;
 
 	}
- 
+
 	public void setName(String name) {
 
 		this.name = name;
 
 	}
- 
+
 	public int getAge() {
 
 		return age;
 
 	}
- 
+
 	public void setAge(int age) {
 
 		this.age = age;
 
 	}
- 
+
 	public String getAddresss() {
 
 		return addresss;
 
 	}
- 
+
 	public void setAddresss(String addresss) {
 
 		this.addresss = addresss;
 
 	}
- 
+
 	public String getPermanantAddress() {
 
 		return permanantAddress;
 
 	}
- 
+
 	public void setPermanantAddress(String permanantAddress) {
 
 		this.permanantAddress = permanantAddress;
 
 	}
- 
+
 	public List<OrderEx> getOrders() {
 
 		return orders;
 
 	}
- 
+
 	public void setOrders(List<OrderEx> orders) {
 
 		this.orders = orders;
 
 	}
- 
- 
-	
 
 }
-
- 

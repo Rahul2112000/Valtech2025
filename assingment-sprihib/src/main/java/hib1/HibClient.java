@@ -1,5 +1,5 @@
 package hib1;
- 
+
 import org.springframework.context.ApplicationContext;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -15,43 +15,42 @@ import ass.classes.OrderEx;
 import ass.services.CustomerService;
 
 import ass.services.InventoryService;
- 
+
 import ass.services.OrderService;
- 
+
 import java.util.List;
- 
+
 public class HibClient {
- 
-    public static void main(String[] args) {
- 
-        // Load Spring Context
 
-        ApplicationContext context = new ClassPathXmlApplicationContext("ass-hib-ann.xml");
- 
-        // Get Service Beans from Spring
+	public static void main(String[] args) {
 
-        CustomerService customerService = context.getBean(CustomerService.class);
+		// Load Spring Context
 
-        InventoryService inventoryService = context.getBean( InventoryService.class);
+		ApplicationContext context = new ClassPathXmlApplicationContext("ass-hib-ann.xml");
+
+		// Get Service Beans from Spring
+
+		CustomerService customerService = context.getBean(CustomerService.class);
+
+		InventoryService inventoryService = context.getBean(InventoryService.class);
 
 //        LiveItemService liveItemService = context.getBean("liveItemServiceImpl", LiveItemService.class);
 
-        OrderService orderService = context.getBean( OrderService.class);
- 
-        // Perform CRUD operations
+		OrderService orderService = context.getBean(OrderService.class);
 
-       // performCustomerOperations(customerService);
+		// Perform CRUD operations
 
-       // performInventoryOperations(inventoryService);
+		// performCustomerOperations(customerService);
 
-      //  performLiveItemOperations(liveItemService);
+		// performInventoryOperations(inventoryService);
 
-      //  performOrderOperations(orderService);
+		// performLiveItemOperations(liveItemService);
 
-   
-    }
-    }
- 
+		// performOrderOperations(orderService);
+//
+	}
+}
+//
 //    private static void performCustomerOperations(CustomerService customerService) {
 //
 //        System.out.println("----- CUSTOMER OPERATIONS -----");
@@ -102,11 +101,11 @@ public class HibClient {
 //
 //        Item item = new Item();
 //
-//        item.setName("Laptop");
+//        item.setName("iphone 17");
 //
-//        item.setQty(10);  
+//        item.setQty(30);  
 //
-//        item.setMinQuantity(5);  // Minimum threshold for reorder
+//        item.setMinQuantity(4);  // Minimum threshold for reorder
 //
 //        item.setMaxQty(20);      // Maximum quantity after restocking
 //
@@ -220,9 +219,7 @@ public class HibClient {
 //    }
 //
 //}
- 
 
- 
 //package hibernate.client;
 
 //
@@ -289,13 +286,13 @@ public class HibClient {
 
 //	
 
-////		Customer c1= new Customer("Ishita",23,"JAI","RAJ");
+////		Customer c1= new Customer("Janvi",23,"JAI","RAJ");
 
-////		Customer c2= new Customer("Jiya",23,"BLR","KAI");
+////		Customer c2= new Customer("Jesu",23,"BLR","KAI");
 
-////		Customer c3= new Customer("Khushi",21,"DEL","DUI");
+////		Customer c3= new Customer("Kesu",21,"DEL","DUI");
 
-////		Customer c4= new Customer("SHIVAM",22,"AMR","HMT");
+////		Customer c4= new Customer("Tesu",22,"AMR","HMT");
 
 ////		
 
@@ -313,9 +310,9 @@ public class HibClient {
 
 //	
 
-//		Item i1=new Item("LAPTOP","XZT",10,4,15);
+//		Item i1=new Item("Iphone 16","Mobile",10,4,15);
 
-//		Item i2=new Item("PC","i5",6,2,10);
+//		Item i2=new Item("Vivo","S775",6,2,10);
 
 //		Item i3=new Item("MOUSE","WIRELESS",5,2,8);
 
@@ -337,18 +334,11 @@ public class HibClient {
 
 //		lDAO.addLiveItem(l1);
 
-//		
-
-//		
+		
 
 //		ctx.close();
 
 //	}
 
-//	
-
-//	
 
 //}
-
- 

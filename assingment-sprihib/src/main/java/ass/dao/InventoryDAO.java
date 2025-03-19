@@ -1,12 +1,10 @@
 package ass.dao;
- 
+
 import java.util.List;
- 
+
 import ass.classes.Item;
- 
+
 public interface InventoryDAO {
- 
-	
 
 	void addInventory(Item item);
 
@@ -23,4 +21,3 @@ public interface InventoryDAO {
 	void updateItem(Item item);
 
 }
- 

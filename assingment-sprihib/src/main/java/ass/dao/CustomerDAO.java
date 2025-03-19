@@ -1,9 +1,9 @@
 package ass.dao;
- 
+
 import java.util.List;
- 
+
 import ass.classes.Customer;
- 
+
 public interface CustomerDAO {
 
 	void addCustomer(Customer customer);
@@ -15,6 +15,5 @@ public interface CustomerDAO {
 	void updateCustomer(Customer customer);
 
 	void deleteCustomer(int id);
- 
+
 }
- 

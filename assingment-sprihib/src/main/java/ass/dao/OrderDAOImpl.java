@@ -1,7 +1,7 @@
 package ass.dao;
- 
+
 import java.util.List;
- 
+
 import org.hibernate.SessionFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +15,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 
 import org.springframework.transaction.annotation.Transactional;
- 
+
 import ass.classes.OrderEx;
- 
+
 @Repository
 
 public class OrderDAOImpl implements OrderDAO {
- 
+
 	private SessionFactory sessionFactory;
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
@@ -37,7 +37,7 @@ public class OrderDAOImpl implements OrderDAO {
 		new HibernateTemplate(sessionFactory).save(order);
 
 	}
- 
+
 	@Override
 
 	public OrderEx getOrder(int id) {
@@ -45,7 +45,7 @@ public class OrderDAOImpl implements OrderDAO {
 		return new HibernateTemplate(sessionFactory).load(OrderEx.class, id);
 
 	}
- 
+
 	@Override
 
 	public List<OrderEx> getAll() {
@@ -53,7 +53,7 @@ public class OrderDAOImpl implements OrderDAO {
 		return new HibernateTemplate(sessionFactory).find("from OrderEx");
 
 	}
- 
+
 	@Override
 
 	public void updateOrder(OrderEx order) {
@@ -61,7 +61,7 @@ public class OrderDAOImpl implements OrderDAO {
 		new HibernateTemplate(sessionFactory).update(order);
 
 	}
- 
+
 	@Override
 
 	public void deleteOrder(int id) {
@@ -69,7 +69,5 @@ public class OrderDAOImpl implements OrderDAO {
 		new HibernateTemplate(sessionFactory).delete(getOrder(id));
 
 	}
- 
-}
 
- 
+}

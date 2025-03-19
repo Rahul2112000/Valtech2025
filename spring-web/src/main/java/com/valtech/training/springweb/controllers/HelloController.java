@@ -27,7 +27,7 @@ public class HelloController {
 		if("scott".equals(login.getUsername()) && "tiger".equals(login.getPassword())) {
 			model.addAttribute("login",login);
 		   return "dashboard";
-	}
+	}   
 		model.addAttribute("message","Invalid Username Password");
 		return "login";
 		

@@ -20,10 +20,11 @@ class ApplicationTests {
 	 
 	@Test
 	void contextLoads() {
-		System.out.println("Hello World "+helloWorld);
-		System.out.println(helloWorld.hello("Valtech"));
-		movieServicesWS.createMovie(new Movie("Hum","Action","Hindi",List.of("Ab")));
-		movieServicesWS.createMovie(new Movie("ABCD","Action","Hindi",List.of("Varun")));
+//		System.out.println("Hello World "+helloWorld);
+//		System.out.println(helloWorld.hello("Valtech"));
+		movieServicesWS.createMovie(new Movie("Dil","Action","Hindi",List.of("AK")));
+		//movieServicesWS.createMovie(new Movie("Hum","Action","Hindi",List.of("Ab")));
+//		movieServicesWS.createMovie(new Movie("ABCD","Action","Hindi",List.of("Varun")));
 
 		System.out.println(movieServicesWS.getAllMovies());
 	}
