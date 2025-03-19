@@ -35,8 +35,8 @@ public class WebSecurityConfig {
 		.anyRequest().authenticated()
 		
 		).httpBasic(Customizer.withDefaults());
-		security.addFilterBefore(loginFilter,BasicAuthenticationFilter.class);
-		security.addFilterBefore(jwtFilter,BasicAuthenticationFilter.class);
+//		security.addFilterBefore(loginFilter,BasicAuthenticationFilter.class);
+//		security.addFilterBefore(jwtFilter,BasicAuthenticationFilter.class);
 		
 		return security.build();
 		

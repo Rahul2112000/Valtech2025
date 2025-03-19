@@ -15,16 +15,16 @@ public class Logfilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
-		HttpServletRequest request=(HttpServletRequest) req;
-		
-		String method=request.getMethod();
-		
-		String url=request.getRequestURI();
-		
-		String message=MessageFormat.format("{0} Received request from {1}", method,url);
+		HttpServletRequest request = (HttpServletRequest) req;
+
+		String method = request.getMethod();
+
+		String url = request.getRequestURI();
+
+		String message = MessageFormat.format("{0} Received request from {1}", method, url);
 		System.out.println(message);
 		chain.doFilter(request, res);
-		
+
 	}
 
 }

@@ -1,11 +1,11 @@
 package servlets;
- 
+
 import java.io.IOException;
 
 import java.util.ArrayList;
 
 import java.util.List;
- 
+
 import dao.Employee;
 
 import dao.Employee.Gender;
@@ -29,7 +29,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import jakarta.servlet.http.HttpSession;
- 
+
 @WebServlet(urlPatterns = "/employees")
 
 public class EmployeesServlet extends HttpServlet {
@@ -42,19 +42,19 @@ public class EmployeesServlet extends HttpServlet {
 
 		super.init(config);
 
-	    ServletContext context = config.getServletContext();
- 
-	    // Fetch EmployeeDAO from context
+		ServletContext context = config.getServletContext();
 
-	    this.dao = (EmployeeDAO) context.getAttribute("employeeDAO");
- 
-	    if (this.dao == null) {
+		// Fetch EmployeeDAO from context
 
-	        throw new ServletException("Error: EmployeeDAO is not initialized in ServletContext!");
+		this.dao = (EmployeeDAO) context.getAttribute("employeeDAO");
 
-	    }
- 
-	    System.out.println(" EmployeeDAO initialized successfully in EmployeesServlet!");
+		if (this.dao == null) {
+
+			throw new ServletException("Error: EmployeeDAO is not initialized in ServletContext!");
+
+		}
+
+		System.out.println(" EmployeeDAO initialized successfully in EmployeesServlet!");
 
 	}
 
@@ -64,7 +64,7 @@ public class EmployeesServlet extends HttpServlet {
 
 		String operation = req.getParameter("operation");
 
-		if("Cancel".equals(operation)) {
+		if ("Cancel".equals(operation)) {
 
 			req.setAttribute("emps", dao.getAll());
 
@@ -76,19 +76,19 @@ public class EmployeesServlet extends HttpServlet {
 
 		Employee emp = Employee.builder().id(Integer.parseInt(req.getParameter("id")))
 
-			       .name(req.getParameter("name"))
+				.name(req.getParameter("name"))
 
-			       .age(Integer.parseInt(req.getParameter("age")))
+				.age(Integer.parseInt(req.getParameter("age")))
 
-			       .gender(Gender.valueOf(req.getParameter("gender").toUpperCase()))
+				.gender(Gender.valueOf(req.getParameter("gender").toUpperCase()))
 
-			       .salary(Integer.parseInt(req.getParameter("salary")))
+				.salary(Integer.parseInt(req.getParameter("salary")))
 
-			       .experience(Integer.parseInt(req.getParameter("experience")))
+				.experience(Integer.parseInt(req.getParameter("experience")))
 
-			       .level(Integer.parseInt(req.getParameter("level"))).build();
- 
-		if("Save".equals(operation)) {
+				.level(Integer.parseInt(req.getParameter("level"))).build();
+
+		if ("Save".equals(operation)) {
 
 			dao.save(emp);
 
@@ -100,7 +100,7 @@ public class EmployeesServlet extends HttpServlet {
 
 		}
 
-		if("Update".equals(operation)) {
+		if ("Update".equals(operation)) {
 
 			dao.update(emp);
 
@@ -120,7 +120,7 @@ public class EmployeesServlet extends HttpServlet {
 
 		String operation = req.getParameter("operation");
 
-		if("Update".equals(operation)) {
+		if ("Update".equals(operation)) {
 
 			int id = Integer.parseInt(req.getParameter("id"));
 
@@ -136,7 +136,7 @@ public class EmployeesServlet extends HttpServlet {
 
 		}
 
-		if("Delete".equals(operation)) {
+		if ("Delete".equals(operation)) {
 
 			int id = Integer.parseInt(req.getParameter("id"));
 
@@ -150,7 +150,7 @@ public class EmployeesServlet extends HttpServlet {
 
 		}
 
-		if("new".equals(operation)) {
+		if ("new".equals(operation)) {
 
 			req.setAttribute("mode", "Save");
 
@@ -160,9 +160,9 @@ public class EmployeesServlet extends HttpServlet {
 
 		}
 
-		if("getAll".equals(req.getParameter("show"))) {
+		if ("getAll".equals(req.getParameter("show"))) {
 
-			List<Employee> emps = new ArrayList<>();  
+			List<Employee> emps = new ArrayList<>();
 
 			emps = dao.getAll();
 
@@ -174,7 +174,7 @@ public class EmployeesServlet extends HttpServlet {
 
 		}
 
-		if("sort".equals(operation)) {
+		if ("sort".equals(operation)) {
 
 			HttpSession session = req.getSession();
 
@@ -184,319 +184,114 @@ public class EmployeesServlet extends HttpServlet {
 
 			String currentColumn = (String) session.getAttribute("sortColumn");
 
-			String order = "ASC" ;
+			String order = "ASC";
 
-			if(column.equals(currentColumn)) {
+			if (column.equals(currentColumn)) {
 
-				order = "DESC".equals(currentOrder) ? "ASC" : "DESC";	
+				order = "DESC".equals(currentOrder) ? "ASC" : "DESC";
 
 			}
 
-			  session.setAttribute("sortColumn", column);
+			session.setAttribute("sortColumn", column);
 
-		      session.setAttribute("sortOrder", order);
- 
-		       List<Employee> emps = dao.sortEmployees(column, order);
+			session.setAttribute("sortOrder", order);
 
-		       req.setAttribute("emps", emps);
+			List<Employee> emps = dao.sortEmployees(column, order);
 
-		       req.getRequestDispatcher("employees.jsp").forward(req, resp);
+			req.setAttribute("emps", emps);
 
-		       return;
+			req.getRequestDispatcher("employees.jsp").forward(req, resp);
+
+			return;
 
 		}
 
 		if ("search".equals(operation)) {
 
-	        String searchType = req.getParameter("searchType");
+			String searchType = req.getParameter("searchType");
 
-	        List<Employee> emps = new ArrayList<>();  
+			List<Employee> emps = new ArrayList<>();
 
-	        switch (searchType) {
+			switch (searchType) {
 
-	            case "name":
+			case "name":
 
-	                String name = req.getParameter("searchValue");
+				String name = req.getParameter("searchValue");
 
-	                emps = dao.searchByName(name);
+				emps = dao.searchByName(name);
 
-	                break;
+				break;
 
-	            case "age":
+			case "age":
 
-	                int age = Integer.parseInt(req.getParameter("searchValue"));
+				int age = Integer.parseInt(req.getParameter("searchValue"));
 
-	                emps = dao.searchByAge(age);
+				emps = dao.searchByAge(age);
 
-	                break;
+				break;
 
-	            case "salary":
+			case "salary":
 
-	                float salary = Float.parseFloat(req.getParameter("searchValue"));
+				float salary = Float.parseFloat(req.getParameter("searchValue"));
 
-	                String condition = req.getParameter("condition");
+				String condition = req.getParameter("condition");
 
-	                emps = dao.searchBySalary(salary, condition);
+				emps = dao.searchBySalary(salary, condition);
 
-	                break;
+				break;
 
-	            case "experience":
+			case "experience":
 
-	                int experience = Integer.parseInt(req.getParameter("searchValue"));
+				int experience = Integer.parseInt(req.getParameter("searchValue"));
 
-	                emps = dao.searchByExperience(experience);
+				emps = dao.searchByExperience(experience);
 
-	                break;
+				break;
 
-	            case "level":
+			case "level":
 
-	                int level = Integer.parseInt(req.getParameter("searchValue"));
+				int level = Integer.parseInt(req.getParameter("searchValue"));
 
-	                emps = dao.searchByLevel(level);
+				emps = dao.searchByLevel(level);
 
-	                break;
+				break;
 
-	            case "id" :
+			case "id":
 
-	            	int id = Integer.parseInt(req.getParameter("searchValue"));
+				int id = Integer.parseInt(req.getParameter("searchValue"));
 
-	            	emps = dao.searchByID(id);
+				emps = dao.searchByID(id);
 
-	            	break;
+				break;
 
-	            case "gender" :
+			case "gender":
 
-	            	String gender = req.getParameter("searchValue");
+				String gender = req.getParameter("searchValue");
 
-	            	emps = dao.searchByGender(gender);
+				emps = dao.searchByGender(gender);
 
-	            	break;
+				break;
 
-	            default:
+			default:
 
-	                emps = dao.getAll();
+				emps = dao.getAll();
 
-	                break;
+				break;
 
-	        }
+			}
 
-	        req.setAttribute("emps", emps);
+			req.setAttribute("emps", emps);
 
-	        req.getRequestDispatcher("employees.jsp").forward(req, resp);
+			req.getRequestDispatcher("employees.jsp").forward(req, resp);
 
-	        return;
+			return;
 
-	    }
+		}
 
 		req.setAttribute("emps", dao.getAll());
 
 		req.getRequestDispatcher("employees.jsp").forward(req, resp);
 
 	}
- 
+
 }
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//package servlets;
-
-
-
-
-
-//
-//import java.io.IOException;
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//import dao.Employee;
-//import dao.Employee.Gender;
-//import dao.EmployeeDAO;
-//import dao.EmployeeDAOImpl;
-//import jakarta.servlet.ServletConfig;
-//import jakarta.servlet.ServletContext;
-//import jakarta.servlet.ServletException;
-//import jakarta.servlet.annotation.WebServlet;
-//import jakarta.servlet.http.HttpServlet;
-//import jakarta.servlet.http.HttpServletRequest;
-//import jakarta.servlet.http.HttpServletResponse;
-//import jakarta.servlet.http.HttpSession;
-//
-//@WebServlet(urlPatterns = "/employees")
-//public class EmployeesServlet extends HttpServlet {
-//	
-//	private EmployeeDAO dao;
-//	
-//	@Override
-//	public void init(ServletConfig config) throws ServletException {
-//		super.init(config);
-//	    ServletContext context = config.getServletContext();
-// 
-//	    // Fetch EmployeeDAO from context
-//	    this.dao = (EmployeeDAO) context.getAttribute("employeeDAO");
-// 
-//	    if (this.dao == null) {
-//	        throw new ServletException("Error: EmployeeDAO is not initialized in ServletContext!");
-//	    }
-// 
-//	    System.out.println(" EmployeeDAO initialized successfully in EmployeesServlet!");
-//	}
-// 
-//		//dao= (EmployeeDAO)config.getServletContext().getAttribute("emp");
-//	
-//	
-//	@Override
-//	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		String operation = req.getParameter("operation");
-//		if("Cancel".equals(operation)) {
-//			req.setAttribute("emps", dao.getAll());
-//			req.getRequestDispatcher("employees.jsp").forward(req, resp);
-//			return;
-//		}
-//		Employee emp = Employee.builder().id(Integer.parseInt(req.getParameter("id")))
-//			       .name(req.getParameter("name"))
-//			       .age(Integer.parseInt(req.getParameter("age")))
-//			       .gender(Gender.valueOf(req.getParameter("gender").toUpperCase()))
-//			       .salary(Integer.parseInt(req.getParameter("salary")))
-//			       .experience(Integer.parseInt(req.getParameter("experience")))
-//			       .level(Integer.parseInt(req.getParameter("level"))).build();
-//
-//		if("Save".equals(operation)) {
-//			dao.save(emp);
-//			req.setAttribute("emps", dao.getAll());
-//			req.getRequestDispatcher("employees.jsp").forward(req, resp);
-//			return;
-//		}
-//		if("Update".equals(operation)) {
-//			dao.update(emp);
-//			req.setAttribute("emps", dao.getAll());
-//			req.getRequestDispatcher("employees.jsp").forward(req, resp);
-//			return;
-//		}
-//	}
-//	
-//	@Override
-//	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		String operation = req.getParameter("operation");
-//		if("Update".equals(operation)) {
-//			int id = Integer.parseInt(req.getParameter("id"));
-//			Employee e = dao.get(id);
-//			req.setAttribute("emp", e);
-//			req.setAttribute("mode", "Update");
-//			req.getRequestDispatcher("editEmployee.jsp").forward(req, resp);
-//			return;
-//		}
-//		if("Delete".equals(operation)) {
-//			int id = Integer.parseInt(req.getParameter("id"));
-//			dao.delete(id);
-//			req.setAttribute("emps", dao.getAll());
-//			req.getRequestDispatcher("employees.jsp").forward(req, resp);
-//			return;
-//		}
-//		if("new".equals(operation)) {
-//			req.setAttribute("mode", "Save");
-//			req.getRequestDispatcher("editEmployee.jsp").forward(req, resp);
-//			return;
-//		}
-//		if("getAll".equals(req.getParameter("show"))) {
-//			List<Employee> emps = new ArrayList<>();  
-//			emps = dao.getAll();
-//			req.setAttribute("emps", dao.getAll());
-//			req.getRequestDispatcher("employees.jsp").forward(req, resp);
-//			
-//			return;
-//		}
-//		if("sort".equals(operation)) {
-//			HttpSession session = req.getSession();
-//			String column = req.getParameter("column");
-//			String currentOrder = (String) session.getAttribute("sortOrder");
-//			String currentColumn = (String) session.getAttribute("sortColumn");
-//			
-//			String order = "ASC" ;
-//			if(column.equals(currentColumn)) {
-//				order = "DESC".equals(currentOrder) ? "ASC" : "DESC";	
-//			}
-//			  session.setAttribute("sortColumn", column);
-//		      session.setAttribute("sortOrder", order);
-//
-//		       List<Employee> emps = dao.sortEmployees(column, order);
-//		       req.setAttribute("emps", emps);
-//		       req.getRequestDispatcher("employees.jsp").forward(req, resp);
-//		       return;
-//		}
-//		
-//		if ("search".equals(operation)) {
-//	        String searchType = req.getParameter("searchType");
-//	       
-//	        List<Employee> emps = new ArrayList<>();  
-//	        switch (searchType) {
-//	            case "name":
-//	                String name = req.getParameter("searchValue");
-//	                emps = dao.searchByName(name);
-//	                break;
-//	            case "age":
-//	                int age = Integer.parseInt(req.getParameter("searchValue"));
-//	                emps = dao.searchByAge(age);
-//	                break;
-//	            case "salary":
-//	                float salary = Float.parseFloat(req.getParameter("searchValue"));
-//	                String condition = req.getParameter("condition");
-//	                emps = dao.searchBySalary(salary, condition);
-//	                break;
-//	            case "experience":
-//	                int experience = Integer.parseInt(req.getParameter("searchValue"));
-//	                emps = dao.searchByExperience(experience);
-//	                break;
-//	            case "level":
-//	                int level = Integer.parseInt(req.getParameter("searchValue"));
-//	                emps = dao.searchByLevel(level);
-//	                break;
-//	            case "id" :
-//	            	int id = Integer.parseInt(req.getParameter("searchValue"));
-//	            	emps = dao.searchByID(id);
-//	            	break;
-//	            case "gender" :
-//	            	String gender = req.getParameter("searchValue");
-//	            	emps = dao.searchByGender(gender);
-//	            	break;
-//	            default:
-//	                emps = dao.getAll();
-//	                break;
-//	        }
-//	        req.setAttribute("emps", emps);
-//	        req.getRequestDispatcher("employees.jsp").forward(req, resp);
-//	        return;
-//	    }
-//		req.setAttribute("emps", dao.getAll());
-//		req.getRequestDispatcher("employees.jsp").forward(req, resp);
-//	}
-//
-//}

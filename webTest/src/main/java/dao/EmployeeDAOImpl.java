@@ -1,5 +1,5 @@
 package dao;
- 
+
 import java.sql.Connection;
 
 import java.sql.DriverManager;
@@ -13,11 +13,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import java.util.List;
- 
+
 import dao.Employee.Gender;
 
 import jakarta.servlet.ServletContext;
- 
+
 public class EmployeeDAOImpl implements EmployeeDAO {
 
 	static {
@@ -33,74 +33,72 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		}
 
 	}
- 
+
 	private ServletContext context;
 
 	public EmployeeDAOImpl(ServletContext context) {
 
 		super();
 
-		this.context = context ;
+		this.context = context;
 
 	}
- 
-	
- 
+
 	public ServletContext getContext() {
 
 		return context;
 
 	}
- 
+
 	public void setContext(ServletContext context) {
 
 		this.context = context;
 
 	}
- 
+
 	private Connection getConnection() throws SQLException {
 
-		return DriverManager.getConnection((String)context.getAttribute("jdbc_url"),(String)context.getAttribute("jdbc_user"),(String)context.getAttribute("jdbc_password"));
+		return DriverManager.getConnection((String) context.getAttribute("jdbc_url"),
+				(String) context.getAttribute("jdbc_user"), (String) context.getAttribute("jdbc_password"));
 
 	}
- 
+
 	@Override
 
 	public void save(Employee e) {
 
-		    try (Connection conn = getConnection()) {
+		try (Connection conn = getConnection()) {
 
-		        PreparedStatement ps = conn.prepareStatement(
+			PreparedStatement ps = conn.prepareStatement(
 
-		            "INSERT INTO employee (id, name, age, gender, salary, experience, level, deptid) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+					"INSERT INTO employee (id, name, age, gender, salary, experience, level, deptid) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
 
-		        );
+			);
 
-		        ps.setInt(1, (int)e.getId());
+			ps.setInt(1, (int) e.getId());
 
-		        ps.setString(2, e.getName());
+			ps.setString(2, e.getName());
 
-		        ps.setInt(3, e.getAge());
+			ps.setInt(3, e.getAge());
 
-		        ps.setString(4, e.getGender().name());
+			ps.setString(4, e.getGender().name());
 
-		        ps.setFloat(5, e.getSalary());
+			ps.setFloat(5, e.getSalary());
 
-		        ps.setInt(6, e.getExperience());
+			ps.setInt(6, e.getExperience());
 
-		        ps.setInt(7, e.getLevel());
-		        ps.setInt(8, e.getDeptId());
+			ps.setInt(7, e.getLevel());
+			ps.setInt(8, e.getDeptId());
 
- 
-		        int rowsAffected = ps.executeUpdate();
+			int rowsAffected = ps.executeUpdate();
 
-		    } catch (SQLException ex) {
+		} catch (SQLException ex) {
 
-		        throw new RuntimeException("Error saving employee: " + ex.getMessage(), ex);
-
-		    }
+			throw new RuntimeException("Error saving employee: " + ex.getMessage(), ex);
 
 		}
+
+	}
 
 	private void setValuesToPreparedStatement(Employee e, PreparedStatement ps) throws SQLException {
 
@@ -119,34 +117,35 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		ps.setInt(7, (int) e.getId());
 
 	}
- 
+
 	@Override
 
 	public void update(Employee e) {
 
-		try(Connection conn = getConnection()) {
+		try (Connection conn = getConnection()) {
 
-			PreparedStatement ps = conn.prepareStatement("UPDATE EMPLOYEE SET NAME = ?,AGE = ?,GENDER = ?,SALARY = ?,EXPERIENCE = ?,LEVEL = ? WHERE ID = ?");
+			PreparedStatement ps = conn.prepareStatement(
+					"UPDATE EMPLOYEE SET NAME = ?,AGE = ?,GENDER = ?,SALARY = ?,EXPERIENCE = ?,LEVEL = ? WHERE ID = ?");
 
 			setValuesToPreparedStatement(e, ps);
 
 			int rowsAffected = ps.executeUpdate();
 
-			System.out.println("Rows Updated = "+ rowsAffected);
+			System.out.println("Rows Updated = " + rowsAffected);
 
 		} catch (Exception ex) {
 
-			throw new RuntimeException(ex);		
+			throw new RuntimeException(ex);
 
 		}
 
 	}
- 
+
 	@Override
 
 	public void delete(int id) {
 
-		try (Connection conn = getConnection()){
+		try (Connection conn = getConnection()) {
 
 			PreparedStatement ps = conn.prepareStatement("DELETE FROM EMPLOYEE WHERE ID = ?");
 
@@ -154,29 +153,31 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 			int rows = ps.executeUpdate();
 
-			System.out.println("Rows Deleted = " +rows);
+			System.out.println("Rows Deleted = " + rows);
 
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 
 		}
- 
+
 	}
- 
+
 	@Override
 
 	public Employee get(int id) {
 
 		try (Connection conn = getConnection()) {
 
-			PreparedStatement ps = conn.prepareStatement("SELECT ID,NAME,AGE,GENDER,SALARY,EXPERIENCE,LEVEL FROM EMPLOYEE WHERE ID = ?");
+			PreparedStatement ps = conn
+					.prepareStatement("SELECT ID,NAME,AGE,GENDER,SALARY,EXPERIENCE,LEVEL FROM EMPLOYEE WHERE ID = ?");
 
 			ps.setInt(1, id);
 
 			ResultSet rs = ps.executeQuery();
 
-			if(rs.next()) {      // is this next method returns true we have another row, next return false, we are at end the resultset
+			if (rs.next()) { // is this next method returns true we have another row, next return false, we
+								// are at end the resultset
 
 				Employee e = populateEmployee(rs);
 
@@ -184,213 +185,215 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 			} else {
 
-				new RuntimeException("No employee with ID "+id+" Found. ");
+				new RuntimeException("No employee with ID " + id + " Found. ");
 
 			}
 
-
 		} catch (Exception ex) {
 
-			throw new RuntimeException(ex);		
+			throw new RuntimeException(ex);
 
 		}
 
 		return null;
 
 	}
- 
+
 	private Employee populateEmployee(ResultSet rs) throws SQLException {
 
-		return Employee.builder().id(rs.getInt(1)).name(rs.getString(2)).age(rs.getInt(3)).gender(Gender.valueOf(rs.getString(4)))
+		return Employee.builder().id(rs.getInt(1)).name(rs.getString(2)).age(rs.getInt(3))
+				.gender(Gender.valueOf(rs.getString(4)))
 
 				.salary(rs.getFloat(5)).experience(rs.getInt(6)).level(rs.getInt(7)).build();
 
 	}
 
- 
- 
 	@Override
 
 	public List<Employee> getAll() {
 
-		 List<Employee> emps = new ArrayList<>();
+		List<Employee> emps = new ArrayList<>();
 
-		    try (Connection conn = getConnection()) {
+		try (Connection conn = getConnection()) {
 
-		        System.out.println("Fetching All Employees");
- 
-		        PreparedStatement ps = conn.prepareStatement("SELECT * FROM employee");
+			System.out.println("Fetching All Employees");
 
-		        ResultSet rs = ps.executeQuery();
- 
-		        while (rs.next()) {
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM employee");
 
-		            emps.add(populateEmployee(rs));  
+			ResultSet rs = ps.executeQuery();
 
-		        }
- 
-		        System.out.println("Total Employees Found: " + emps.size());
+			while (rs.next()) {
 
-		    } catch (SQLException e) {
+				emps.add(populateEmployee(rs));
 
-		        e.printStackTrace();
+			}
 
-		    }
- 
-		    return emps;
+			System.out.println("Total Employees Found: " + emps.size());
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+
+		}
+
+		return emps;
 
 	}
 
- 
 	@Override
 
 	public List<Employee> searchByName(String name) {
 
-	    List<Employee> emps = new ArrayList<>();
+		List<Employee> emps = new ArrayList<>();
 
-	    try (Connection conn = getConnection()) {
+		try (Connection conn = getConnection()) {
 
-	        PreparedStatement ps = conn.prepareStatement("SELECT ID, NAME, AGE, GENDER, SALARY, EXPERIENCE, LEVEL FROM EMPLOYEE WHERE NAME LIKE ?");
+			PreparedStatement ps = conn.prepareStatement(
+					"SELECT ID, NAME, AGE, GENDER, SALARY, EXPERIENCE, LEVEL FROM EMPLOYEE WHERE NAME LIKE ?");
 
-	        ps.setString(1, "%" + name + "%");
+			ps.setString(1, "%" + name + "%");
 
-	        ResultSet rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery();
 
-	        while (rs.next()) {
+			while (rs.next()) {
 
-	            emps.add(populateEmployee(rs));
+				emps.add(populateEmployee(rs));
 
-	        }
+			}
 
-	    } catch (Exception ex) {
+		} catch (Exception ex) {
 
-	        throw new RuntimeException(ex);
+			throw new RuntimeException(ex);
 
-	    }
+		}
 
-	    return emps;
+		return emps;
 
 	}
- 
+
 	@Override
 
 	public List<Employee> searchByAge(int age) {
 
-	    List<Employee> emps = new ArrayList<>();
+		List<Employee> emps = new ArrayList<>();
 
-	    try (Connection conn = getConnection()) {
+		try (Connection conn = getConnection()) {
 
-	        PreparedStatement ps = conn.prepareStatement("SELECT ID, NAME, AGE, GENDER, SALARY, EXPERIENCE, LEVEL FROM EMPLOYEE WHERE AGE = ?");
+			PreparedStatement ps = conn.prepareStatement(
+					"SELECT ID, NAME, AGE, GENDER, SALARY, EXPERIENCE, LEVEL FROM EMPLOYEE WHERE AGE = ?");
 
-	        ps.setInt(1, age);
+			ps.setInt(1, age);
 
-	        ResultSet rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery();
 
-	        while (rs.next()) {
+			while (rs.next()) {
 
-	            emps.add(populateEmployee(rs));
+				emps.add(populateEmployee(rs));
 
-	        }
+			}
 
-	    } catch (Exception ex) {
+		} catch (Exception ex) {
 
-	        throw new RuntimeException(ex);
+			throw new RuntimeException(ex);
 
-	    }
+		}
 
-	    return emps;
+		return emps;
 
 	}
- 
+
 	@Override
 
 	public List<Employee> searchBySalary(float salary, String condition) {
 
-	    List<Employee> emps = new ArrayList<>();
+		List<Employee> emps = new ArrayList<>();
 
-	    try (Connection conn = getConnection()) {
+		try (Connection conn = getConnection()) {
 
-	        String query = "SELECT ID, NAME, AGE, GENDER, SALARY, EXPERIENCE, LEVEL FROM EMPLOYEE WHERE SALARY " + condition + " ?";
+			String query = "SELECT ID, NAME, AGE, GENDER, SALARY, EXPERIENCE, LEVEL FROM EMPLOYEE WHERE SALARY "
+					+ condition + " ?";
 
-	        PreparedStatement ps = conn.prepareStatement(query);
+			PreparedStatement ps = conn.prepareStatement(query);
 
-	        ps.setFloat(1, salary);
+			ps.setFloat(1, salary);
 
-	        ResultSet rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery();
 
-	        while (rs.next()) {
+			while (rs.next()) {
 
-	            emps.add(populateEmployee(rs));
+				emps.add(populateEmployee(rs));
 
-	        }
+			}
 
-	    } catch (Exception ex) {
+		} catch (Exception ex) {
 
-	        throw new RuntimeException(ex);
+			throw new RuntimeException(ex);
 
-	    }
+		}
 
-	    return emps;
+		return emps;
 
 	}
- 
+
 	@Override
 
 	public List<Employee> searchByExperience(int experience) {
 
-	    List<Employee> emps = new ArrayList<>();
+		List<Employee> emps = new ArrayList<>();
 
-	    try (Connection conn = getConnection()) {
+		try (Connection conn = getConnection()) {
 
-	        PreparedStatement ps = conn.prepareStatement("SELECT ID, NAME, AGE, GENDER, SALARY, EXPERIENCE, LEVEL FROM EMPLOYEE WHERE EXPERIENCE = ?");
+			PreparedStatement ps = conn.prepareStatement(
+					"SELECT ID, NAME, AGE, GENDER, SALARY, EXPERIENCE, LEVEL FROM EMPLOYEE WHERE EXPERIENCE = ?");
 
-	        ps.setInt(1, experience);
+			ps.setInt(1, experience);
 
-	        ResultSet rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery();
 
-	        while (rs.next()) {
+			while (rs.next()) {
 
-	            emps.add(populateEmployee(rs));
+				emps.add(populateEmployee(rs));
 
-	        }
+			}
 
-	    } catch (Exception ex) {
+		} catch (Exception ex) {
 
-	        throw new RuntimeException(ex);
+			throw new RuntimeException(ex);
 
-	    }
+		}
 
-	    return emps;
+		return emps;
 
 	}
- 
+
 	@Override
 
 	public List<Employee> searchByLevel(int level) {
 
-	    List<Employee> emps = new ArrayList<>();
+		List<Employee> emps = new ArrayList<>();
 
-	    try (Connection conn = getConnection()) {
+		try (Connection conn = getConnection()) {
 
-	        PreparedStatement ps = conn.prepareStatement("SELECT ID, NAME, AGE, GENDER, SALARY, EXPERIENCE, LEVEL FROM EMPLOYEE WHERE LEVEL = ?");
+			PreparedStatement ps = conn.prepareStatement(
+					"SELECT ID, NAME, AGE, GENDER, SALARY, EXPERIENCE, LEVEL FROM EMPLOYEE WHERE LEVEL = ?");
 
-	        ps.setInt(1, level);
+			ps.setInt(1, level);
 
-	        ResultSet rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery();
 
-	        while (rs.next()) {
+			while (rs.next()) {
 
-	            emps.add(populateEmployee(rs));
+				emps.add(populateEmployee(rs));
 
-	        }
+			}
 
-	    } catch (Exception ex) {
+		} catch (Exception ex) {
 
-	        throw new RuntimeException(ex);
+			throw new RuntimeException(ex);
 
-	    }
+		}
 
-	    return emps;
+		return emps;
 
 	}
 
@@ -400,15 +403,16 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 		List<Employee> emps = new ArrayList<>();
 
-		try(Connection conn = getConnection()){
+		try (Connection conn = getConnection()) {
 
-			PreparedStatement ps = conn.prepareStatement("SELECT ID, NAME, AGE, GENDER, SALARY, EXPERIENCE, LEVEL FROM EMPLOYEE WHERE ID = ?");
+			PreparedStatement ps = conn.prepareStatement(
+					"SELECT ID, NAME, AGE, GENDER, SALARY, EXPERIENCE, LEVEL FROM EMPLOYEE WHERE ID = ?");
 
 			ps.setInt(1, id);
 
 			ResultSet rs = ps.executeQuery();
 
-			while(rs.next()) {
+			while (rs.next()) {
 
 				emps.add(populateEmployee(rs));
 
@@ -420,7 +424,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 		}
 
-		return emps ;
+		return emps;
 
 	}
 
@@ -430,15 +434,16 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 		List<Employee> emps = new ArrayList<>();
 
-		try(Connection conn = getConnection()) {
+		try (Connection conn = getConnection()) {
 
-			PreparedStatement ps = conn.prepareStatement("SELECT ID, NAME, AGE, GENDER, SALARY, EXPERIENCE, LEVEL FROM EMPLOYEE WHERE GENDER = ?");
+			PreparedStatement ps = conn.prepareStatement(
+					"SELECT ID, NAME, AGE, GENDER, SALARY, EXPERIENCE, LEVEL FROM EMPLOYEE WHERE GENDER = ?");
 
 			ps.setString(1, gender);
 
 			ResultSet rs = ps.executeQuery();
 
-			while(rs.next()) {
+			while (rs.next()) {
 
 				emps.add(populateEmployee(rs));
 
@@ -450,24 +455,25 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 		}
 
-		return emps ;
+		return emps;
 
 	}
-
 
 	@Override
 
-	public List<Employee> sortEmployees(String column,String order) {
+	public List<Employee> sortEmployees(String column, String order) {
 
 		List<Employee> emps = new ArrayList<>();
 
-		try(Connection conn = getConnection()) {
+		try (Connection conn = getConnection()) {
 
-			PreparedStatement ps = conn.prepareStatement("SELECT ID, NAME, AGE, GENDER, SALARY, EXPERIENCE, LEVEL FROM EMPLOYEE ORDER BY " + column + " " + order);
+			PreparedStatement ps = conn
+					.prepareStatement("SELECT ID, NAME, AGE, GENDER, SALARY, EXPERIENCE, LEVEL FROM EMPLOYEE ORDER BY "
+							+ column + " " + order);
 
 			ResultSet rs = ps.executeQuery();
 
-			while(rs.next()) {
+			while (rs.next()) {
 
 				emps.add(populateEmployee(rs));
 
@@ -479,310 +485,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 		}
 
-		return emps;					
- 
+		return emps;
 
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//package dao;
-
-//
-//import java.sql.Connection;
-//import java.sql.DriverManager;
-//import java.sql.PreparedStatement;
-//import java.sql.ResultSet;
-//import java.sql.SQLException;
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//import dao.Employee.Gender;
-//import jakarta.servlet.ServletContext;
-//
-//public class EmployeeDAOImpl implements EmployeeDAO {
-//	
-//	static {
-//		try {
-//			Class.forName("org.postgresql.Driver");
-//		} catch (ClassNotFoundException e) {
-//			
-//			e.printStackTrace();
-//		}
-//	}
-//
-//	private ServletContext context;
-//	
-//	public EmployeeDAOImpl(ServletContext context) {
-//		
-//		super();
-//		this.context = context ;
-//	}
-//
-//	public EmployeeDAOImpl() {
-//		
-//	}
-//
-//	public ServletContext getContext() {
-//		return context;
-//	}
-//
-//	public void setContext(ServletContext context) {
-//		this.context = context;
-//	}
-//
-//	private Connection getConnection() throws SQLException {
-//		return DriverManager.getConnection((String)context.getAttribute("jdbc_url"),(String)context.getAttribute("jdbc_user"),(String)context.getAttribute("jdbc_password"));
-//	}
-//
-//	@Override
-//	public void save(Employee e) {
-//		try(Connection conn = getConnection()) {
-//			PreparedStatement ps = conn.prepareStatement("INSERT INTO EMPLOYEE (NAME,AGE,GENDER,SALARY,EXPERIENCE,LEVEL,ID) VALUES (?,?,?,?,?,?,?)");
-//			setValuesToPreparedStatement(e, ps);
-//			int rowsAffected = ps.executeUpdate();
-//			System.out.println("Rows Updated = "+ rowsAffected);
-//			
-//		} catch(Exception ex) {
-//			throw new RuntimeException(ex);
-//		}
-//
-//	}
-//
-//	private void setValuesToPreparedStatement(Employee e, PreparedStatement ps) throws SQLException {
-//		ps.setString(1, e.getName());
-//		ps.setInt(2, e.getAge());
-//		ps.setString(3, e.getGender().name());
-//		ps.setFloat(4, e.getSalary());
-//		ps.setInt(5, e.getExperience());
-//		ps.setInt(6, e.getLevel());
-//		ps.setInt(7, (int) e.getId());
-//	}
-//
-//	@Override
-//	public void update(Employee e) {
-//		try(Connection conn = getConnection()) {  //ID,NAME,AGE,GENDER,SALARY,EXPERIENCE,LEVEL
-//			PreparedStatement ps = conn.prepareStatement("UPDATE EMPLOYEE SET NAME = ?,AGE = ?,GENDER = ?,SALARY = ?,EXPERIENCE = ?,LEVEL = ? WHERE ID = ?");
-//			setValuesToPreparedStatement(e, ps);
-//			int rowsAffected = ps.executeUpdate();
-//			System.out.println("Rows Updated = "+ rowsAffected);
-//			
-//		} catch (Exception ex) {
-//			throw new RuntimeException(ex);		
-//		}
-//		
-//	}
-//
-//	@Override
-//	public void delete(int id) {
-//		try (Connection conn = getConnection()){
-//			PreparedStatement ps = conn.prepareStatement("DELETE FROM EMPLOYEE WHERE ID = ?");
-//			ps.setInt(1, id);
-//			int rows = ps.executeUpdate();
-//			System.out.println("Rows Deleted = " +rows);
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//
-//	}
-//
-//	@Override
-//	public Employee get(int id) {
-//		try (Connection conn = getConnection()) {
-//			PreparedStatement ps = conn.prepareStatement("SELECT ID,NAME,AGE,GENDER,SALARY,EXPERIENCE,LEVEL FROM EMPLOYEE WHERE ID = ?");
-//			ps.setInt(1, id);
-//			ResultSet rs = ps.executeQuery();
-//			if(rs.next()) {      // is this next method returns true we have another row, next return false, we are at end the resultset
-//				Employee e = populateEmployee(rs);
-//				return e;
-//			} else {
-//				new RuntimeException("No employee with ID "+id+" Found. ");
-//			}
-//			
-//			
-//		} catch (Exception ex) {
-//			throw new RuntimeException(ex);		
-//		}
-//		return null;
-//	}
-//
-//	private Employee populateEmployee(ResultSet rs) throws SQLException {
-//		return Employee.builder().id(rs.getInt(1)).name(rs.getString(2)).age(rs.getInt(3)).gender(Gender.valueOf(rs.getString(4)))
-//				.salary(rs.getFloat(5)).experience(rs.getInt(6)).level(rs.getInt(7)).build();
-//	}
-//
-//	@Override
-//	public List<Employee> getAll() {
-//		List<Employee> emps = new ArrayList<Employee>();
-//		try (Connection conn = getConnection()){
-//			PreparedStatement ps = conn.prepareStatement("SELECT ID,NAME,AGE,GENDER,SALARY,EXPERIENCE,LEVEL FROM EMPLOYEE");
-//			ResultSet rs = ps.executeQuery();
-//			while(rs.next()) {
-//				emps.add(populateEmployee(rs));
-//			}
-//			}catch (Exception ex) {
-//				throw new RuntimeException(ex);		
-//			}
-//		
-//		return emps;
-//	}
-//	
-//	
-//
-//	@Override
-//	public List<Employee> searchByName(String name) {
-//	    List<Employee> emps = new ArrayList<>();
-//	    try (Connection conn = getConnection()) {
-//	        PreparedStatement ps = conn.prepareStatement("SELECT ID, NAME, AGE, GENDER, SALARY, EXPERIENCE, LEVEL FROM EMPLOYEE WHERE NAME LIKE ?");
-//	        ps.setString(1, "%" + name + "%");
-//	        ResultSet rs = ps.executeQuery();
-//	        while (rs.next()) {
-//	            emps.add(populateEmployee(rs));
-//	        }
-//	    } catch (Exception ex) {
-//	        throw new RuntimeException(ex);
-//	    }
-//	    return emps;
-//	}
-//
-//	@Override
-//	public List<Employee> searchByAge(int age) {
-//	    List<Employee> emps = new ArrayList<>();
-//	    try (Connection conn = getConnection()) {
-//	        PreparedStatement ps = conn.prepareStatement("SELECT ID, NAME, AGE, GENDER, SALARY, EXPERIENCE, LEVEL FROM EMPLOYEE WHERE AGE = ?");
-//	        ps.setInt(1, age);
-//	        ResultSet rs = ps.executeQuery();
-//	        while (rs.next()) {
-//	            emps.add(populateEmployee(rs));
-//	        }
-//	    } catch (Exception ex) {
-//	        throw new RuntimeException(ex);
-//	    }
-//	    return emps;
-//	}
-//
-//	@Override
-//	public List<Employee> searchBySalary(float salary, String condition) {
-//	    List<Employee> emps = new ArrayList<>();
-//	    try (Connection conn = getConnection()) {
-//	        String query = "SELECT ID, NAME, AGE, GENDER, SALARY, EXPERIENCE, LEVEL FROM EMPLOYEE WHERE SALARY " + condition + " ?";
-//	        PreparedStatement ps = conn.prepareStatement(query);
-//	        ps.setFloat(1, salary);
-//	        ResultSet rs = ps.executeQuery();
-//	        while (rs.next()) {
-//	            emps.add(populateEmployee(rs));
-//	        }
-//	    } catch (Exception ex) {
-//	        throw new RuntimeException(ex);
-//	    }
-//	    return emps;
-//	}
-//
-//	@Override
-//	public List<Employee> searchByExperience(int experience) {
-//	    List<Employee> emps = new ArrayList<>();
-//	    try (Connection conn = getConnection()) {
-//	        PreparedStatement ps = conn.prepareStatement("SELECT ID, NAME, AGE, GENDER, SALARY, EXPERIENCE, LEVEL FROM EMPLOYEE WHERE EXPERIENCE = ?");
-//	        ps.setInt(1, experience);
-//	        ResultSet rs = ps.executeQuery();
-//	        while (rs.next()) {
-//	            emps.add(populateEmployee(rs));
-//	        }
-//	    } catch (Exception ex) {
-//	        throw new RuntimeException(ex);
-//	    }
-//	    return emps;
-//	}
-//
-//	@Override
-//	public List<Employee> searchByLevel(int level) {
-//	    List<Employee> emps = new ArrayList<>();
-//	    try (Connection conn = getConnection()) {
-//	        PreparedStatement ps = conn.prepareStatement("SELECT ID, NAME, AGE, GENDER, SALARY, EXPERIENCE, LEVEL FROM EMPLOYEE WHERE LEVEL = ?");
-//	        ps.setInt(1, level);
-//	        ResultSet rs = ps.executeQuery();
-//	        while (rs.next()) {
-//	            emps.add(populateEmployee(rs));
-//	        }
-//	    } catch (Exception ex) {
-//	        throw new RuntimeException(ex);
-//	    }
-//	    return emps;
-//	}
-//	
-//	@Override
-//	public List<Employee> searchByID(int id) {
-//		List<Employee> emps = new ArrayList<>();
-//		try(Connection conn = getConnection()){
-//			PreparedStatement ps = conn.prepareStatement("SELECT ID, NAME, AGE, GENDER, SALARY, EXPERIENCE, LEVEL FROM EMPLOYEE WHERE ID = ?");
-//			ps.setInt(1, id);
-//			ResultSet rs = ps.executeQuery();
-//			while(rs.next()) {
-//				emps.add(populateEmployee(rs));
-//			}
-//		} catch (Exception ex) {
-//			throw new RuntimeException(ex);
-//		}
-//		return emps ;
-//	}
-//	
-//	@Override
-//	public List<Employee> searchByGender(String gender) {
-//		List<Employee> emps = new ArrayList<>();
-//		try(Connection conn = getConnection()) {
-//			PreparedStatement ps = conn.prepareStatement("SELECT ID, NAME, AGE, GENDER, SALARY, EXPERIENCE, LEVEL FROM EMPLOYEE WHERE GENDER = ?");
-//			ps.setString(1, gender);
-//			ResultSet rs = ps.executeQuery();
-//			while(rs.next()) {
-//				emps.add(populateEmployee(rs));
-//			}
-//		} catch (Exception ex) {
-//			throw new RuntimeException(ex);
-//		}
-//		return emps ;
-//	}
-//	
-//	@Override
-//	public List<Employee> sortEmployees(String column,String order) {
-//		List<Employee> emps = new ArrayList<>();
-//		try(Connection conn = getConnection()) {
-//			PreparedStatement ps = conn.prepareStatement("SELECT ID, NAME, AGE, GENDER, SALARY, EXPERIENCE, LEVEL FROM EMPLOYEE ORDER BY " + column + " " + order);
-//			ResultSet rs = ps.executeQuery();
-//			while(rs.next()) {
-//				emps.add(populateEmployee(rs));
-//			}
-//		} catch (Exception ex) {
-//			throw new RuntimeException(ex);
-//		}
-//		return emps;
-//	}
-//
-//}
