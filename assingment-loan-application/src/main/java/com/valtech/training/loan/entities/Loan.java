@@ -1,6 +1,6 @@
 package com.valtech.training.loan.entities;
 
-import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,31 +13,31 @@ public class Loan {
 	@SequenceGenerator(name = "loan-seq",sequenceName = "loan-seq",allocationSize = 1)
 	
 	private long id;
-	@Column(nullable = false)
+	
 	private String name;
-	@Column(nullable = false,unique = true)
-	private String pan_card;
-	@Column(nullable = false)
+	
+	private String pancard;
+	
 	private String address;
-	@Column(nullable = false)
+	
 	private int cibil;
-	@Column(nullable = false)
+	
 	private double income;
-	@Column(nullable = false)
+	
 	private double assestValue;
 	private double approvedAmount;
-	@Column(nullable = false)
+	
 	private String status;
 	
 	public Loan() {
 		
 	}
 
-	public Loan(String name, String pan_card, String address, int cibil, double income, double assestValue,
+	public Loan(String name, String pancard, String address, int cibil, double income, double assestValue,
 			String status) {
 		super();
 		this.name = name;
-		this.pan_card = pan_card;
+		this.pancard = pancard;
 		this.address = address;
 		this.cibil = cibil;
 		this.income = income;
@@ -62,11 +62,11 @@ public class Loan {
 	}
 
 	public String getPan_card() {
-		return pan_card;
+		return pancard;
 	}
 
 	public void setPan_card(String pan_card) {
-		this.pan_card = pan_card;
+		this.pancard = pan_card;
 	}
 
 	public String getAddress() {
@@ -117,14 +117,6 @@ public class Loan {
 		this.status = status;
 	}
 
-	@Override
-	public String toString() {
-		return "Loan [id=" + id + ", name=" + name + ", pan_card=" + pan_card + ", address=" + address + ", cibil="
-				+ cibil + ", income=" + income + ", assestValue=" + assestValue + ", approvedAmount=" + approvedAmount
-				+ ", status=" + status + "]";
-	}
-	
-	
 	
 	
 	
