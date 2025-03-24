@@ -102,4 +102,9 @@ public class LiveItem {
 
 	}
 
+	public void setQuantity(int i) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -7,6 +7,11 @@ import javax.persistence.*;
 @Table(name = "OrderEx")
 public class OrderEx {
 
+	public enum Status {
+	    PLACED,
+	    FAILED;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "orderseq")
 	@SequenceGenerator(name = "orderseq", sequenceName = "order_seq", allocationSize = 1)

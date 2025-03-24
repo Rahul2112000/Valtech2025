@@ -131,6 +131,14 @@ public class InventoryServiceImpl implements InventoryService {
         }
 
     }
+
+	@Override
+	public Item getItem(int i) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
  
 	
  

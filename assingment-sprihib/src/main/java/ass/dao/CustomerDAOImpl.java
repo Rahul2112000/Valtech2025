@@ -64,4 +64,10 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 	}
 
+	@Override
+	public void update(Customer c) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

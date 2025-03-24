@@ -21,5 +21,11 @@ public interface InventoryService {
 
 	void reorderItem(Item item);
 
+	Item getItem(int i);
+
+	
+
+	
+
 }
  

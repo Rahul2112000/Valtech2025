@@ -66,47 +66,7 @@
 
 	<hr></hr>
 
-	<%-- <table>
-	<tr>
-	<th>Id</th>
-	<th>Name</th>
-	<th>Age</th>
-	<th>Gender</th>
-	<th>Salary</th>
-	<th>Experience</th>
-	<th>Level</th>
-	</tr>
-<%
-	List<Employee>emps = (List<Employee>) request.getAttribute("emps");
-    for(Employee e : emps){
-%>
-    <tr>
-    	<td>
-    		<%= e.getId() %>
-    	</td>
-    	<td>
-    		<%= e.getName() %>
-    	</td>
-    	<td>
-    		<%= e.getAge() %>
-    	</td>
-    	<td>
-    		<%= e.getGender() %>
-    	</td>
-    	<td>
-    		<%= e.getSalary() %>
-    	</td>
-    	<td>
-    		<%= e.getExperience() %>
-    	</td>
-    	<td>
-    		<%= e.getLevel() %>
-    	</td>
-    </tr>
-<% } %>
-		
-</table>
-  --%>
+	
 
 </body>
 </html>

@@ -183,4 +183,9 @@ public class Item {
 
 	}
 
+	public int getCurrentQuantity() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

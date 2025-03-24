@@ -70,4 +70,10 @@ public class OrderDAOImpl implements OrderDAO {
 
 	}
 
+	
+	public Object get(OrderEx order,int id) {
+		
+		return new HibernateTemplate(sessionFactory).load(OrderEx.class,id);
+	}
+
 }

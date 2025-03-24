@@ -73,6 +73,13 @@ public class OrderServiceImpl implements OrderService {
 		}
 
 	}
+
+//	@Override
+//	public void getOrder(OrderEx order) {
+//		return orderDAO.getOrder(order);
+//
+//		
+//	}
  
 }
 
